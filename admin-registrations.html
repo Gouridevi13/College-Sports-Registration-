@@ -1,0 +1,209 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h1>👥 Manage Sports Registrations</h1>
+
+<p class="page-subtitle">
+    Review student registrations and update their status.
+</p>
+
+{% if registrations %}
+
+<div class="table-container">
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>Student</th>
+                <th>Student ID</th>
+                <th>Sport</th>
+                <th>Category</th>
+                <th>Course</th>
+                <th>Year</th>
+                <th>Status</th>
+                <th>Update</th>
+                <th>Drop Requests</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for registration in registrations %}
+
+            <tr>
+
+                <td>
+                    <strong>
+                        {{ registration['name'] }}
+                    </strong>
+                    <br>
+                    <small>
+                        {{ registration['username'] }}
+                    </small>
+                </td>
+
+                <td>
+                    {{ registration['student_id'] }}
+                </td>
+
+                <td>
+                    🏆 {{ registration['sport_name'] }}
+                </td>
+
+                <td>
+                    {{ registration['category'] }}
+                </td>
+
+                <td>
+                    {{ registration['course'] }}
+                </td>
+
+                <td>
+                    {{ registration['year'] }}
+                </td>
+
+                <td>
+
+                    <span class="status {{ registration['status']|lower }}">
+                        {{ registration['status'] }}
+                    </span>
+
+                </td>
+
+                <td>
+
+                    <form
+                        method="POST"
+                        action="{{ url_for(
+                            'update_registration',
+                            registration_id=registration['id']
+                        ) }}"
+                    >
+
+                        <select name="status">
+
+                            <option value="Pending"
+                                {% if registration['status'] == 'Pending' %}
+                                selected
+                                {% endif %}>
+                                Pending
+                            </option>
+
+                            <option value="Approved"
+                                {% if registration['status'] == 'Approved' %}
+                                selected
+                                {% endif %}>
+                                Approved
+                            </option>
+
+                            <option value="Rejected"
+                                {% if registration['status'] == 'Rejected' %}
+                                selected
+                                {% endif %}>
+                                Rejected
+                            </option>
+
+                        </select>
+
+                        <button
+                            type="submit"
+                            class="small-btn">
+                            Update
+                        </button>
+
+                    </form>
+
+                </td>
+
+            </tr>
+                            <td>
+
+                    {% if registration['drop_request'] == 'Requested' %}
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'accept_drop',
+                                registration_id=registration['id']
+                            ) }}"
+                            style="display:inline;"
+                        >
+                            <button
+                                type="submit"
+                                class="small-btn"
+                                onclick="return confirm('Accept this drop request?');">
+                                ✅ Accept
+                            </button>
+                        </form>
+
+                        <form
+                            method="POST"
+                            action="{{ url_for(
+                                'reject_drop',
+                                registration_id=registration['id']
+                            ) }}"
+                            style="display:inline;"
+                        >
+                            <button
+                                type="submit"
+                                class="small-btn"
+                                onclick="return confirm('Reject this drop request?');">
+                                ❌ Reject
+                            </button>
+                        </form>
+
+                    {% elif registration['drop_request'] == 'Accepted' %}
+
+                        <span class="status">
+                            ✅ Accepted
+                        </span>
+
+                    {% elif registration['drop_request'] == 'Rejected' %}
+
+                        <span class="status">
+                            ❌ Rejected
+                        </span>
+
+                    {% else %}
+
+                        <span>
+                            No Request
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% else %}
+
+<div class="empty-message">
+
+    <div class="empty-icon">
+        📋
+    </div>
+
+    <h2>
+        No Registrations
+    </h2>
+
+    <p>
+        No students have registered for sports yet.
+    </p>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

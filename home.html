@@ -1,0 +1,215 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% if session.get('role') == 'admin' %}
+
+    <!-- ADMIN HOME PAGE -->
+
+    <div class="hero">
+
+        <div class="hero-icon">
+            🏆
+        </div>
+
+        <h1>Sports Management Dashboard</h1>
+
+        <p>
+            Manage college sports, registrations, and competitions.
+        </p>
+
+        <a href="{{ url_for('admin_registrations') }}" class="btn">
+            Manage Registrations
+        </a>
+
+    </div>
+
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+            <div class="stat-icon">🏅</div>
+
+            <h2>{{ sports_count }}</h2>
+
+            <p>Available Sports</p>
+        </div>
+
+
+        <div class="stat-card">
+            <div class="stat-icon">👥</div>
+
+            <h2>{{ registrations_count }}</h2>
+
+            <p>Total Registrations</p>
+        </div>
+
+    </div>
+
+
+   <div class="stats-grid">
+
+    <div class="stat-card">
+
+        <div class="stat-icon">➕</div>
+
+        <h2>Add Sport</h2>
+
+        <p>Add a new sport</p>
+
+        <a href="{{ url_for('add_sport') }}" class="btn">
+            Add Sport
+        </a>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">⚙️</div>
+
+        <h2>Manage Registrations</h2>
+
+        <p>Review student registrations and update their status.</p>
+
+        <a href="{{ url_for('admin_registrations') }}" class="btn">
+            Manage
+        </a>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon">🏅</div>
+
+        <h2>Manage Sports</h2>
+
+        <p>Add or remove sports that are not being conducted.</p>
+
+        <a href="{{ url_for('sports') }}" class="btn">
+            Manage Sports
+        </a>
+
+    </div>
+
+</div>
+
+
+{% else %}
+
+    <!-- STUDENT HOME PAGE -->
+
+    <div class="hero">
+
+        <div class="hero-icon">
+            🏆
+        </div>
+
+        <h1>College Sports Registration</h1>
+
+        <p>
+            Register for your favourite college sports and participate in campus competitions.
+        </p>
+
+        <a href="{{ url_for('sports') }}" class="btn">
+            Explore Sports
+        </a>
+
+    </div>
+
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🏅
+            </div>
+
+            <h2>{{ sports_count }}</h2>
+
+            <p>Available Sports</p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                👥
+            </div>
+
+            <h2>{{ registrations_count }}</h2>
+
+            <p>Registrations</p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                ⚡
+            </div>
+
+            <h2>Easy</h2>
+
+            <p>Online Registration</p>
+
+        </div>
+
+    </div>
+
+
+    <div class="features">
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🏏
+            </div>
+
+            <h2>Multiple Sports</h2>
+
+            <p>
+                Choose from indoor and outdoor sports available at the college.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                📝
+            </div>
+
+            <h2>Easy Registration</h2>
+
+            <p>
+                Register for your selected sport using a simple online form.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                ✅
+            </div>
+
+            <h2>Track Status</h2>
+
+            <p>
+                Check whether your registration is Pending, Approved or Rejected.
+            </p>
+
+        </div>
+
+    </div>
+
+{% endif %}
+
+{% endblock %}

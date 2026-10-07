@@ -1,0 +1,138 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h1>📋 My Sports Registrations</h1>
+
+<p class="page-subtitle">
+    View the sports you have registered for and track their status.
+</p>
+
+{% if registrations %}
+
+<div class="registration-list">
+
+    {% for registration in registrations %}
+
+    <div class="registration-card">
+
+        <div class="registration-header">
+
+            <div>
+
+                <h2>
+                    🏆 {{ registration['sport_name'] }}
+                </h2>
+
+                <p>
+                    {{ registration['category'] }}
+                </p>
+
+            </div>
+
+            <span class="status {{ registration['status']|lower }}">
+                {{ registration['status'] }}
+            </span>
+
+        </div>
+
+        <div class="registration-details">
+
+            <p>
+                <strong>Student ID:</strong>
+                {{ registration['student_id'] }}
+            </p>
+
+            <p>
+                <strong>Course:</strong>
+                {{ registration['course'] }}
+            </p>
+
+            <p>
+                <strong>Year:</strong>
+                {{ registration['year'] }}
+            </p>
+
+            <p>
+                <strong>Venue:</strong>
+                {{ registration['venue'] }}
+            </p>
+
+            <p>
+                <strong>Registered On:</strong>
+                {{ registration['registration_date'] }}
+            </p>
+
+        </div>
+        <div class="registration-actions">
+
+    <a href="{{ url_for('edit_registration', registration_id=registration['id']) }}"
+       class="btn">
+        ✏️ Edit Registration
+    </a>
+
+    {% if registration['drop_request'] == 'None' %}
+        <form action="{{ url_for('request_drop', registration_id=registration['id']) }}"
+              method="POST"
+              style="display:inline;"
+              onsubmit="return confirm('Are you sure you want to request dropping this registration?');">
+
+            <button type="submit" class="remove-btn">
+                📤 Request Drop
+            </button>
+
+        </form>
+
+    {% elif registration['drop_request'] == 'Requested' %}
+
+        <button class="remove-btn" disabled>
+            ⏳ Drop Requested
+        </button>
+
+    {% elif registration['drop_request'] == 'Rejected' %}
+
+        <button class="remove-btn" disabled>
+            ❌ Drop Request Rejected
+        </button>
+
+    {% elif registration['drop_request'] == 'Accepted' %}
+
+        <button class="remove-btn" disabled>
+            ✅ Drop Approved
+        </button>
+
+    {% endif %}
+
+</div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="empty-message">
+
+    <div class="empty-icon">
+        🏅
+    </div>
+
+    <h2>
+        No Registrations Yet
+    </h2>
+
+    <p>
+        You haven't registered for any sport yet.
+    </p>
+
+    <a href="{{ url_for('sports') }}" class="btn">
+        Explore Sports
+    </a>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

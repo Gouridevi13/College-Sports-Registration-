@@ -1,0 +1,141 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% if session.get('role') == 'admin' %}
+
+<h1>🏅 Manage Sports</h1>
+
+<p class="page-subtitle">
+    Add or remove sports for the college competition.
+</p>
+
+{% else %}
+
+<h1>🏅 Available Sports</h1>
+
+<p class="page-subtitle">
+    Choose your favourite sport and register for the college competition.
+</p>
+
+{% endif %}
+
+<div class="sports-grid">
+
+    {% for sport in sports %}
+
+    <div class="sport-card">
+
+        <div class="sport-icon">
+
+            {% if sport['sport_name'] == 'Cricket' %}
+                🏏
+
+            {% elif sport['sport_name'] == 'Football' %}
+                ⚽
+
+            {% elif sport['sport_name'] == 'Volleyball' %}
+                🏐
+
+            {% elif sport['sport_name'] == 'Badminton' %}
+                🏸
+
+            {% elif sport['sport_name'] == 'Table Tennis' %}
+                🏓
+
+            {% elif sport['sport_name'] == 'Athletics' %}
+                🏃
+
+            {% elif sport['sport_name'] == 'Chess' %}
+                ♟️
+
+           {% elif sport['sport_name'] == 'Carroms' %}
+                ⚫
+
+            {% elif sport['sport_name'] == 'Basketball' %}
+                🏀
+
+            {% elif sport['sport_name'] == 'Tennis' %}
+                🎾
+
+            {% elif sport['sport_name'] == 'Swimming' %}
+                🏊
+
+            {% elif sport['sport_name'] == 'Boxing' %}
+                🥊
+
+            {% elif sport['sport_name'] == 'Archery' %}
+                🏹
+
+            {% elif sport['sport_name'] == 'Golf' %}
+                ⛳
+
+            {% elif sport['sport_name'] == 'Cycling' %}
+                🚴
+
+            {% else %}
+                🏆
+
+            {% endif %}
+
+        </div>
+
+        <h2>{{ sport['sport_name'] }}</h2>
+
+        <span class="category">
+            {{ sport['category'] }}
+        </span>
+
+        <p>
+            📍 {{ sport['venue'] }}
+        </p>
+
+
+        <!-- Buttons based on user role -->
+
+        {% if session.get('user_id') %}
+
+            {% if session.get('role') == 'admin' %}
+
+                <!-- Admin can remove the sport -->
+
+                <form action="{{ url_for('delete_sport', sport_id=sport['id']) }}"
+                      method="POST"
+                      style="display:inline;"
+                      onsubmit="return confirm('Are you sure you want to remove this sport?');">
+
+                    <button type="submit" class="remove-btn">
+                        Remove Sport
+                    </button>
+
+                </form>
+
+            {% else %}
+
+                <!-- Students can register -->
+
+                <a href="{{ url_for('register_sport', sport_id=sport['id']) }}"
+                   class="btn">
+                    Register Now
+                </a>
+
+            {% endif %}
+
+        {% else %}
+
+            <!-- Visitors must login -->
+
+            <a href="{{ url_for('login') }}"
+               class="btn">
+                Login to Register
+            </a>
+
+        {% endif %}
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

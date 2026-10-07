@@ -1,0 +1,157 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="form-container">
+
+    <div class="form-icon">
+        ➕
+    </div>
+
+    <h1>
+        Add New Sport
+    </h1>
+
+    <p class="form-subtitle">
+        Add a new sport to the college registration system.
+    </p>
+
+    <form method="POST">
+
+        <label>
+            Sport Name
+        </label>
+
+        <input
+            type="text"
+            name="sport_name"
+            placeholder="Example: Basketball"
+            required
+        >
+
+        <label>
+            Category
+        </label>
+
+        <select name="category" required>
+
+            <option value="">
+                Select Category
+            </option>
+
+            <option value="Indoor">
+                Indoor
+            </option>
+
+            <option value="Outdoor">
+                Outdoor
+            </option>
+
+        </select>
+
+        <label>
+            Venue
+        </label>
+
+        <input
+            type="text"
+            name="venue"
+            placeholder="Example: College Sports Ground"
+            required
+        >
+
+        <label>
+            Sport Icon
+        </label>
+
+        <select name="icon" required>
+
+            <option value="">
+                Select Sport Icon
+            </option>
+
+           <option value="🏏">
+    🏏 Cricket
+</option>
+
+<option value="⚽">
+    ⚽ Football
+</option>
+
+<option value="🏀">
+    🏀 Basketball
+</option>
+
+<option value="🏐">
+    🏐 Volleyball
+</option>
+
+<option value="🏸">
+    🏸 Badminton
+</option>
+
+<option value="🏓">
+    🏓 Table Tennis
+</option>
+
+<option value="🎾">
+    🎾 Tennis
+</option>
+
+<option value="🏃">
+    🏃 Athletics
+</option>
+
+<option value="♟️">
+    ♟️ Chess
+</option>
+
+<option value="⚫">
+    ⚫ Carroms
+</option>
+
+<option value="🏊">
+    🏊 Swimming
+</option>
+
+<option value="🥊">
+    🥊 Boxing
+</option>
+
+<option value="🏹">
+    🏹 Archery
+</option>
+
+<option value="⛳">
+    ⛳ Golf
+</option>
+
+<option value="🚴">
+    🚴 Cycling
+</option>
+
+<option value="🏆">
+    🏆 Other
+</option>
+
+        </select>
+
+        <button
+            type="submit"
+            class="btn">
+            Add Sport
+        </button>
+
+    </form>
+
+    <p class="form-footer">
+
+        <a href="{{ url_for('sports') }}">
+            ← Back to Sports
+        </a>
+
+    </p>
+
+</div>
+
+{% endblock %}
